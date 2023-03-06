@@ -3,7 +3,7 @@ import { useState } from 'react'
 import ModalImage from './ModalImage'
 
 export default function ImagesContainer ({ images }) {
-  const [imgToView, setImgToView] = useState<string | undefined>(undefined)
+  const [imgToView, setImgToView] = useState(undefined)
 
   const handleOpen = (img) => {
     setImgToView(img)
