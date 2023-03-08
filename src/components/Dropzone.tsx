@@ -1,9 +1,8 @@
-import useUpload from '@/hooks/useUpload'
 import { useDropzone } from 'react-dropzone'
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import Image from 'next/image'
 
-export default function Dropzone ({ setImgStr, uploadImg }: { setImgStr: Function, uploadImg: Function }) {
+export default function Dropzone ({ setImgStr, uploadImg }: { setImgStr: Function, uploadImg: Function }): ReactElement {
   const [imgPrev, setImgPrev] = useState<string | undefined>(undefined)
   const { getRootProps, getInputProps, open } = useDropzone({
     accept: {
@@ -16,7 +15,7 @@ export default function Dropzone ({ setImgStr, uploadImg }: { setImgStr: Functio
       const reader = new FileReader()
       reader.readAsDataURL(acceptedFiles[0])
       reader.onload = function (onLoadEvent) {
-        if (onLoadEvent.target?.result) {
+        if (onLoadEvent.target?.result !== undefined) {
           setImgStr(onLoadEvent.target.result)
           setImgPrev(URL.createObjectURL(acceptedFiles[0]))
         }
@@ -29,14 +28,13 @@ export default function Dropzone ({ setImgStr, uploadImg }: { setImgStr: Functio
       {
         imgPrev === undefined
           ? (
-            <section className='rounded-lg flex items-center justify-center py-10 shadow-lg shadow-emerald-600/50 bg-slate-700 border border-emerald-600 h-full'>
+            <section className='rounded-lg flex items-center justify-center py-16 shadow-lg shadow-emerald-600/50 bg-slate-700 border border-emerald-600 md:w-2/5 mx-auto'>
               <div className='flex flex-col items-center gap-4' {...getRootProps()}>
                 <input {...getInputProps()} />
                 <p className='text-xl text-slate-100'>Drag &apos;n drop here or</p>
                 <button className='py-2 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-slate-100 hover:text-slate-50' onClick={open}>Select file</button>
               </div>
-            </section>
-          )
+            </section>)
           : (
             <div className='flex flex-col items-center gap-8'>
               <div>

@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import SearchBar from '@/components/SearchBar';
-import Header from '@/components/Header';
-import Image from 'next/image';
-import Link from 'next/link';
-import Footer from '@/components/Footer';
+import SearchBar from '@/components/SearchBar'
+import Header from '@/components/Header'
+import Image from 'next/image'
+import Link from 'next/link'
+import Footer from '@/components/Footer'
+import { ReactElement } from 'react'
 
-export default function Home () {
-
+export default function Home (): ReactElement {
   return (
     <div className='bg-slate-900 min-h-screen flex flex-col'>
       <Head>
@@ -19,7 +19,7 @@ export default function Home () {
         <section className='flex flex-col-reverse md:flex-row items-center justify-between w-4/5'>
           <div className='md:w-2/4 h-full gap-4 md:gap-12 flex flex-col justify-between'>
             <div>
-              <h1 className='text-center md:text-start text-slate-50 text-3xl md:text-5xl italic mb-4'>Luster</h1>
+              <h1 className='text-center md:text-start text-3xl md:text-5xl mb-4 text-2xl font-mono text-emerald-400 italic'>Luster AI</h1>
               <p className='md:text-xl mb-2 text-slate-100'>Free images created by AI. Luster provides assets created by the community using an AI to use in your personal projects or wherever you want.</p>
               <p className='md:text-xl mb-4 text-slate-100'>Or you can get inspired to make your own prompts based in our resources.</p>
               <SearchBar />

@@ -1,12 +1,11 @@
 import Image from 'next/image'
-import React, { useEffect } from 'react'
+import { ReactElement, useEffect, useState } from 'react'
 import { CgClose } from 'react-icons/cg'
-import { useState } from 'react'
 
-export default function ModalImage ({ handleClose, img }: { handleClose: Function, img: string }) {
+export default function ModalImage ({ handleClose, img }: { handleClose: Function, img: string }): ReactElement {
   const [downloadURL, setDownloadURL] = useState('')
   useEffect(() => {
-    (
+    void (
       async function () {
         const image = await fetch(img)
         const imageBlog = await image.blob()

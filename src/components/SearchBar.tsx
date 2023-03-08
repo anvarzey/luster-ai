@@ -1,34 +1,34 @@
 import { FaSearch } from 'react-icons/fa'
-import { useState, ChangeEvent, SyntheticEvent, useEffect } from 'react'
+import { useState, ChangeEvent, ReactElement, SyntheticEvent } from 'react'
 import useTags from '@/hooks/useTags'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { CgClose } from 'react-icons/cg'
 
-export default function SearchBar () {
+export default function SearchBar (): ReactElement {
   const [search, setSearch] = useState<string>('')
   const [suggestions, setSuggestions] = useState<string[]>([])
   const { tags } = useTags()
   const router = useRouter()
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>): void => {
     const { value } = e.target
     setSearch(value)
     if (value.length < 1) {
       setSuggestions([])
-    } else if (tags) {
+    } else if (tags.length >= 1) {
       setSuggestions(tags.filter(tag => tag.includes(value)))
     }
   }
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleSubmit = (e: SyntheticEvent): void => {
     e.preventDefault()
     if (search !== undefined && search.length > 2) {
-      router.push(`/search/${search}`)
+      router.push(`/search/${search}`).catch(err => console.error(err))
     }
   }
 
-  const handleDeleteSearch = () => {
+  const handleDeleteSearch = (): void => {
     setSearch('')
     setSuggestions([])
   }
@@ -39,23 +39,23 @@ export default function SearchBar () {
         <button>
           <FaSearch />
         </button>
-        <input onChange={handleChange} value={search} className='outline-none w-full bg-inherit' type="text" name="" id="" placeholder='Search AI images by topic...' />
+        <input onChange={handleChange} value={search} className='outline-none w-full bg-inherit' type='text' name='' id='' placeholder='Search AI images by topic...' />
         {
-          search &&
-          <button onClick={handleDeleteSearch}>
-            <CgClose />
-          </button>
+          search.length > 1 && (
+            <button onClick={handleDeleteSearch}>
+              <CgClose />
+            </button>)
         }
       </form>
       {
-        suggestions.length > 0 &&
-        <ul className='bg-white w-full py-2 rounded-lg absolute top-11 max-h-40 overflow-y-scroll'>
-          {suggestions.map(sg => (
-            <li key={sg}>
-              <Link href={`/search/${sg}`} className='hover:bg-slate-200 cursor-pointer px-2 w-full block'>{sg}</Link>
-            </li>
-          ))}
-        </ul>
+        suggestions.length > 0 && (
+          <ul className='bg-white w-full py-2 rounded-lg absolute top-11 max-h-40 overflow-y-scroll'>
+            {suggestions.map(sg => (
+              <li key={sg}>
+                <Link href={`/search/${sg}`} className='hover:bg-slate-200 cursor-pointer px-2 w-full block'>{sg}</Link>
+              </li>
+            ))}
+          </ul>)
       }
     </div>
   )

@@ -1,7 +1,7 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from 'next/link'
+import { ReactElement } from 'react'
 
-export default function Footer () {
+export default function Footer (): ReactElement {
   return (
     <footer className='flex items-center justify-center border-t border-slate-800 py-4'>
       <div className='text-emerald-700'>

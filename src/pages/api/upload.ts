@@ -2,7 +2,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { v2 as cloudinary } from 'cloudinary'
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.API_KEY,
@@ -10,20 +9,20 @@ cloudinary.config({
   secure: true
 })
 
-export default async function handler(
+export default async function handler (
   req: NextApiRequest,
   res: NextApiResponse
-) {
+): Promise<void> {
   const { image } = JSON.parse(req.body)
   const result = await cloudinary.uploader.upload(image, {
     folder: 'my-public-folder',
     transformation: [
-      {if: 'width > 1000'},
+      { if: 'width > 1000' },
       {
         width: 1000,
         crop: 'scale'
       },
-      {if: 'end'}
+      { if: 'end' }
     ],
     categorization: 'google_tagging',
     auto_tagging: 0.6
